@@ -1,11 +1,15 @@
 TEMPLATE = app
 CONFIG += console c++17
 CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG += qt
+QT += core
+QT -= gui
 
 SOURCES += \
         main.cpp
 
 HEADERS += \
-    ControladorApp.h \
-    Reproducible.h
+    Album.h \
+    Anuncio.h \
+    Cancion.h \
+    IReproducible.h
