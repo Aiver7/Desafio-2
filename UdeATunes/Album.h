@@ -2,14 +2,14 @@
 #define ALBUM_H
 #include <QString>
 
-class Album {
-    QString nombreAlbum, nombreCantante, rutaPortada;
-public:
-    Album(const QString& album, const QString& cantante, const QString& portada)
-        : nombreAlbum(album), nombreCantante(cantante), rutaPortada(portada) {}
+class Artista;
 
-    const QString& getNombreAlbum()   const { return nombreAlbum; }
-    const QString& getNombreCantante()const { return nombreCantante; }
-    const QString& getRutaPortada()   const { return rutaPortada; }
+class Album {
+public:
+    qint64 idAlbum{0};
+    QString titulo, coverPngPath;
+    Artista* artistaPrincipal{nullptr};
+    qint64 pistasIds[128];
+    int pistasCount{0};
 };
-#endif // ALBUM_H
+#endif

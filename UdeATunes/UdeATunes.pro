@@ -11,6 +11,7 @@ SOURCES += \
 HEADERS += \
     Album.h \
     Anuncio.h \
+    Artista.h \
     Cancion.h \
     ClasePrincipal.h \
     IReproducible.h \
