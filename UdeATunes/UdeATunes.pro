@@ -12,4 +12,6 @@ HEADERS += \
     Album.h \
     Anuncio.h \
     Cancion.h \
-    IReproducible.h
+    ClasePrincipal.h \
+    IReproducible.h \
+    Usuario.h

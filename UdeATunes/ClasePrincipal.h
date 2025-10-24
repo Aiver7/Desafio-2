@@ -1,0 +1,4 @@
+#ifndef CLASEPRINCIPAL_H
+#define CLASEPRINCIPAL_H
+
+#endif // CLASEPRINCIPAL_H
