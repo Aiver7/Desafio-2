@@ -6,6 +6,7 @@ QT += core
 QT -= gui
 
 SOURCES += \
+        IReproducible.cpp \
         main.cpp
 
 HEADERS += \
