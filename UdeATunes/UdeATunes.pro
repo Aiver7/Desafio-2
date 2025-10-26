@@ -8,6 +8,7 @@ QT -= gui
 SOURCES += \
         ColaReproduccion.cpp \
         IReproducible.cpp \
+        Loaders.cpp \
         main.cpp
 
 HEADERS += \
@@ -18,4 +19,5 @@ HEADERS += \
     ClasePrincipal.h \
     ColaReproduccion.h \
     IReproducible.h \
+    Loaders.h \
     Usuario.h

@@ -13,7 +13,9 @@ struct ColaReproduccion {
     void avanzarSecuencial(){ if(count) idx = (idx+1)%count; }
 };
 
+// nuevas firmas
 void reproducirActual(ColaReproduccion& cola, bool premium);
 void siguienteSecuencial(ColaReproduccion& cola);
+void avanzarSegunPlan(ColaReproduccion& cola, bool premium);
 
 #endif

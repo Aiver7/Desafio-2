@@ -11,7 +11,19 @@ static void imprimirItem(const IReproducible& r, bool premium){
     }
 }
 
+void avanzarSegunPlan(ColaReproduccion& cola, bool premium){
+    if (cola.count==0) return;
+    int guard=0;
+    while (guard<cola.count){
+        IReproducible* it = cola.actual();
+        if (!it) return;
+        if (premium && it->esAnuncio()){ cola.avanzarSecuencial(); ++guard; continue; }
+        break;
+    }
+}
+
 void reproducirActual(ColaReproduccion& cola, bool premium){
+    avanzarSegunPlan(cola, premium);
     IReproducible* it = cola.actual();
     if (!it) return;
     imprimirItem(*it, premium);

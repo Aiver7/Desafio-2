@@ -1,36 +1,27 @@
 #include <QCoreApplication>
 #include <QTextStream>
-#include "Cancion.h"
-#include "Anuncio.h"
+#include "Loaders.h"
 #include "IReproducible.h"
 #include "ColaReproduccion.h"
-#include "Usuario.h"
 
 int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     QTextStream in(stdin), out(stdout);
 
-    Usuario u;
-    // selección de plan
-    out << "Plan (0=Estandar, 1=Premium): ";
-    out.flush();
-    int p=0; in >> p;
-    if (p==1) { /* suponer método set a premium si lo tienes; sino usa flag local */ }
+    out << "Plan (0=Estandar, 1=Premium): " << Qt::flush;
+    int p=0; in >> p; bool premium = (p==1);
 
-    // Datos demo
-    Cancion c; c.titulo="Demo Song"; c.path128="audio/demo_128.aac"; c.path320="audio/demo_320.aac"; c.coverPng="covers/demo.png"; c.duracionSeg=180;
-    Anuncio a; a.mensaje="Compra 2x1 en UdeAStore"; a.duracionSeg=15; a.peso=2;
+    CancionArr ca; AnuncioArr aa;
+    cargarCanciones("./canciones.txt", ca);
+    cargarAnuncios ("./anuncios.txt",  aa);
 
     ColaReproduccion cola;
-    cola.push(IReproducible::fromCancion(&c));
-    cola.push(IReproducible::fromAnuncio(&a));
-    cola.push(IReproducible::fromCancion(&c));
+    if (ca.n>0) cola.push(IReproducible::fromCancion(&ca.items[0]));
+    if (!premium && aa.n>0) cola.push(IReproducible::fromAnuncio(&aa.items[0])); // solo en estándar
+    if (ca.n>1) cola.push(IReproducible::fromCancion(&ca.items[1]));
 
-    bool premium = (p==1);
     reproducirActual(cola, premium);
-    siguienteSecuencial(cola);
-    reproducirActual(cola, premium);
-    siguienteSecuencial(cola);
-    reproducirActual(cola, premium);
+    siguienteSecuencial(cola); reproducirActual(cola, premium);
+    siguienteSecuencial(cola); reproducirActual(cola, premium);
     return 0;
 }
