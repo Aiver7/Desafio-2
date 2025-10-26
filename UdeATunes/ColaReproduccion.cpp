@@ -25,22 +25,15 @@ void avanzarSegunPlan(ColaReproduccion& cola, bool premium){
 }
 
 void reproducirActual(ColaReproduccion& cola, bool premium){
+    avanzarSegunPlan(cola, premium);
     IReproducible* it = cola.actual();
+    if (!it) return;
     QTextStream out(stdout);
-    if (!it){ out << "[Cola vacia]\n"; return; }
-    if (premium && it->esAnuncio()){
-        out << "[Saltando anuncio por premium]\n";
-        cola.avanzarSecuencial();
-        it = cola.actual();
-        if (!it){ out << "[Cola vacia]\n"; return; }
-    }
     if (it->esCancion()){
         out << "Portada: " << ir_cover(*it) << "\n";
         out << "Audio: "   << ir_audioPath(*it, premium) << "\n";
     } else if (it->esAnuncio()){
         out << ir_titulo(*it) << "\n";
-    } else {
-        out << "[Item desconocido]\n";
     }
 }
 

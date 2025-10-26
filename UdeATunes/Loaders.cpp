@@ -36,7 +36,7 @@ bool cargarAnuncios(const QString& path, AnuncioArr& out){
     while(!ts.atEnd() && out.n<64){
         QString line = ts.readLine();
         if(line.trimmed().isEmpty()) continue;
-        QStringList parts = line.split('|'); // permitido por Qt; si lo evitas, replica split5.
+        QStringList parts = line.split('|');
         if(parts.size()<4) continue;
         Anuncio a;
         a.id = parts[0].toLongLong();
