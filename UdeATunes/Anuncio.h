@@ -1,18 +1,12 @@
 #ifndef ANUNCIO_H
 #define ANUNCIO_H
-#include <QTextStream>
-#include "IReproducible.h"
+#include <QString>
 
-class Anuncio : public IReproducible {
-    QString id, mensaje; int duracion = 0; int prioridad = 1; // 1=C,2=B,3=AAA
+class Anuncio {
 public:
-    Anuncio(const QString& id_, const QString& msg, int dur, int pri)
-        : id(id_), mensaje(msg), duracion(dur), prioridad(pri) {}
-    int duracionSeg() const override { return duracion; }
-    QString titulo() const override { return id; }
-    void reproducir() override {
-        QTextStream out(stdout);
-        out << "Mensaje publicitario: " << mensaje << " (cat: " << prioridad << ")\n";
-    }
+    qint64 id{0};
+    QString mensaje;
+    int duracionSeg{0};
+    int peso{1};
 };
-#endif // ANUNCIO_H
+#endif

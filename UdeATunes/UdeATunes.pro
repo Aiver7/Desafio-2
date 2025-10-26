@@ -6,6 +6,7 @@ QT += core
 QT -= gui
 
 SOURCES += \
+        ColaReproduccion.cpp \
         IReproducible.cpp \
         main.cpp
 
@@ -15,5 +16,6 @@ HEADERS += \
     Artista.h \
     Cancion.h \
     ClasePrincipal.h \
+    ColaReproduccion.h \
     IReproducible.h \
     Usuario.h

@@ -1,19 +1,6 @@
 #include "IReproducible.h"
 #include <QString>
 
-
-class Cancion {
-public:
-    qint64 id{0}; int duracionSeg{0};
-    QString titulo, path128, path320, coverPng;
-};
-class Anuncio {
-public:
-    qint64 id{0}; int duracionSeg{0};
-    QString mensaje; int peso{1};
-};
-
-// Implementaciones asociadas a IReproducible
 int ir_duracion(const IReproducible& r){
     return r.esCancion() ? r.cancion->duracionSeg
                          : (r.esAnuncio() ? r.anuncio->duracionSeg : 0);
