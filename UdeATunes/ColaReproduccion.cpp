@@ -1,7 +1,6 @@
 #include "ColaReproduccion.h"
 #include <QTextStream>
 
-// Impresión uniforme según IReproducible
 static void imprimirItem(const IReproducible& r, bool premium){
     QTextStream out(stdout);
     if (r.esCancion()){
@@ -12,14 +11,12 @@ static void imprimirItem(const IReproducible& r, bool premium){
     }
 }
 
-// Reproduce el elemento actual (si existe).
 void reproducirActual(ColaReproduccion& cola, bool premium){
     IReproducible* it = cola.actual();
     if (!it) return;
     imprimirItem(*it, premium);
 }
 
-// Avanza al siguiente en modo secuencial.
 void siguienteSecuencial(ColaReproduccion& cola){
     if (cola.count==0) return;
     cola.avanzarSecuencial();
