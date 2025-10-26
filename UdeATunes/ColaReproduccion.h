@@ -1,7 +1,7 @@
 #ifndef COLAREPRODUCCION_H
 #define COLAREPRODUCCION_H
-#include <QString>
 #include "IReproducible.h"
+class Cancion; class GestorPublicidad; class Usuario;
 
 struct ColaReproduccion {
     IReproducible items[256];
@@ -13,9 +13,8 @@ struct ColaReproduccion {
     void avanzarSecuencial(){ if(count) idx = (idx+1)%count; }
 };
 
-// nuevas firmas
 void reproducirActual(ColaReproduccion& cola, bool premium);
 void siguienteSecuencial(ColaReproduccion& cola);
 void avanzarSegunPlan(ColaReproduccion& cola, bool premium);
-
+void encolarCancion(ColaReproduccion& cola, Cancion* c, bool premium, GestorPublicidad* gp, const Usuario& u);
 #endif

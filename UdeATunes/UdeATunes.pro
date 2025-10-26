@@ -18,6 +18,8 @@ HEADERS += \
     Cancion.h \
     ClasePrincipal.h \
     ColaReproduccion.h \
+    ConstruirCola.h \
+    GestorPublicidad.h \
     IReproducible.h \
     Loaders.h \
     Usuario.h
