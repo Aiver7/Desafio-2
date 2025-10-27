@@ -13,6 +13,15 @@ static void imprimirItem(const IReproducible& r, bool premium){
     }
 }
 
+void listarCola(const ColaReproduccion& cola){
+    QTextStream out(stdout);
+    out << "[Cola] total=" << cola.count << "\n";
+    for(int i=0;i<cola.count; ++i){
+        const IReproducible& it = cola.items[i];
+        out << i << ": " << (it.esCancion()? "cancion":"anuncio") << "\n";
+    }
+}
+
 void avanzarSegunPlan(ColaReproduccion& cola, bool premium){
     if (cola.count==0) return;
     int guard=0;
@@ -28,13 +37,7 @@ void reproducirActual(ColaReproduccion& cola, bool premium){
     avanzarSegunPlan(cola, premium);
     IReproducible* it = cola.actual();
     if (!it) return;
-    QTextStream out(stdout);
-    if (it->esCancion()){
-        out << "Portada: " << ir_cover(*it) << "\n";
-        out << "Audio: "   << ir_audioPath(*it, premium) << "\n";
-    } else if (it->esAnuncio()){
-        out << ir_titulo(*it) << "\n";
-    }
+    imprimirItem(*it, premium);
 }
 
 void siguienteSecuencial(ColaReproduccion& cola){
@@ -43,7 +46,7 @@ void siguienteSecuencial(ColaReproduccion& cola){
 }
 
 void encolarCancion(ColaReproduccion& cola, Cancion* c, bool premium, GestorPublicidad* gp, const Usuario& u){
-    if (!premium && cola.cancionesDesdeAd >= 2 && gp){
+    if (!premium && cola.cancionesDesdeAd >= AD_INTERVAL && gp){
         CtxAnuncio ctx;
         Anuncio* ad = gp->seleccionarPara(u, ctx);
         if (ad){ cola.push(IReproducible::fromAnuncio(ad)); cola.cancionesDesdeAd = 0; }

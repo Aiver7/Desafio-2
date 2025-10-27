@@ -1,19 +1,17 @@
 #include "IReproducible.h"
-#include <QString>
+#include "Cancion.h"
+#include "Anuncio.h"
 
-int ir_duracion(const IReproducible& r){
-    return r.esCancion() ? r.cancion->duracionSeg
-                         : (r.esAnuncio() ? r.anuncio->duracionSeg : 0);
-}
 QString ir_titulo(const IReproducible& r){
-    return r.esCancion() ? r.cancion->titulo
-                         : (r.esAnuncio() ? QStringLiteral("[AD] ") + r.anuncio->mensaje
-                                          : QString());
-}
-QString ir_audioPath(const IReproducible& r, bool premium){
-    return r.esCancion() ? (premium ? r.cancion->path320 : r.cancion->path128)
-                         : QString();
+    return r.esCancion()? r.ref.c->titulo : r.ref.a->mensaje;
 }
 QString ir_cover(const IReproducible& r){
-    return r.esCancion() ? r.cancion->coverPng : QString();
+    return r.esCancion()? r.ref.c->coverPng : QString("N/A");
 }
+QString ir_audioPath(const IReproducible& r, bool premium){
+    if(r.esCancion()){
+        return premium? r.ref.c->path320 : r.ref.c->path128;
+    }
+    return "N/A";
+}
+

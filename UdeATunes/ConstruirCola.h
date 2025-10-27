@@ -1,6 +1,6 @@
 #ifndef CONSTRUIR_COLA_H
 #define CONSTRUIR_COLA_H
-#include "Loaders.h"
+#include "CargasCancionAnuncio.h"
 #include "ColaReproduccion.h"
 #include "GestorPublicidad.h"
 #include "Usuario.h"

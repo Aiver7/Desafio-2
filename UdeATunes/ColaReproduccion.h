@@ -1,8 +1,10 @@
-#ifndef COLAREPRODUCCION_H
-#define COLAREPRODUCCION_H
+#ifndef COLA_REPRODUCCION_H
+#define COLA_REPRODUCCION_H
+#include <QTextStream>
 #include "IReproducible.h"
 class Cancion; class GestorPublicidad; class Usuario;
 
+// Estructura de la cola
 struct ColaReproduccion {
     IReproducible items[256];
     int count{0}, idx{0};
@@ -13,8 +15,13 @@ struct ColaReproduccion {
     void avanzarSecuencial(){ if(count) idx = (idx+1)%count; }
 };
 
+const int AD_INTERVAL = 2;
+
+// API
 void reproducirActual(ColaReproduccion& cola, bool premium);
 void siguienteSecuencial(ColaReproduccion& cola);
 void avanzarSegunPlan(ColaReproduccion& cola, bool premium);
 void encolarCancion(ColaReproduccion& cola, Cancion* c, bool premium, GestorPublicidad* gp, const Usuario& u);
+void listarCola(const ColaReproduccion& cola); // opcional
+
 #endif

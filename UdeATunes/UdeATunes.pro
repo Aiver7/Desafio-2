@@ -6,20 +6,28 @@ QT += core
 QT -= gui
 
 SOURCES += \
+        Aleatorio.cpp \
+        CargasCancionAnuncio.cpp \
+        CargasUsuarios.cpp \
         ColaReproduccion.cpp \
+        Favoritos.cpp \
         IReproducible.cpp \
-        Loaders.cpp \
+        Medidor.cpp \
         main.cpp
 
 HEADERS += \
     Album.h \
+    Aleatorio.h \
     Anuncio.h \
     Artista.h \
     Cancion.h \
+    CargasCancionAnuncio.h \
+    CargasUsuarios.h \
     ClasePrincipal.h \
     ColaReproduccion.h \
     ConstruirCola.h \
+    Favoritos.h \
     GestorPublicidad.h \
     IReproducible.h \
-    Loaders.h \
+    Medidor.h \
     Usuario.h

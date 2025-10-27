@@ -2,10 +2,11 @@
 #include <QCoreApplication>
 #include <QTextStream>
 #include <QDir>
-#include "Loaders.h"
+#include "CargasCancionAnuncio.h"
 #include "ColaReproduccion.h"
 #include "GestorPublicidad.h"
 #include "Usuario.h"
+#include "CargasUsuarios.h"
 
 // Utilidad simple para reconstruir la cola aplicando la política de anuncios
 static void ReconstruirCola(CancionArr& ca, AnuncioArr& aa, ColaReproduccion& cola, bool premium, const Usuario& u){
@@ -38,7 +39,7 @@ int main(int argc, char *argv[]) {
         << " okC=" << okC << " okA=" << okA << "\n";
 
     Usuario u;
-    bool premium = true;
+    bool premium = false;
     ColaReproduccion cola;              // declara cola aquí
 
     auto ReconstruirCola = [&](void){
@@ -51,6 +52,31 @@ int main(int argc, char *argv[]) {
 
     ReconstruirCola();
     out << "cola=" << cola.count << "\n";
+
+    UsuarioArr ua;
+    if(!cargarUsuarios("data/usuarios.txt", ua)){
+        out << "No se pudo cargar usuarios\n";
+        return 0;
+    }
+
+    Usuario u;
+    bool premium = false;
+
+    // pedir nickname
+    out << "Usuario: "; out.flush();
+    QString basura = in.readLine(); // limpia buffer si vienes de >> op
+    QString nick   = in.readLine();
+
+    if(!loginPorNick(ua, nick.toUtf8().constData(), u)){
+        out << "Usuario no encontrado. Entrando como estandar.\n";
+        u.setNickname("invitado");
+        u.setPlanPremium(false);
+    }
+
+    premium = u.esPremium();
+    out << "Bienvenido " << u.getNickname()
+        << " (plan=" << (premium? "PREMIUM":"ESTANDAR") << ")\n";
+
 
     for(;;){
         ImprimirMenu(out);
@@ -82,4 +108,5 @@ int main(int argc, char *argv[]) {
         else { out << "Opcion no valida.\n"; }
     }
     return 0;
+}
 }
