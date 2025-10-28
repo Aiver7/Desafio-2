@@ -1,35 +1,29 @@
 #include "Aleatorio.h"
-#include "Cancion.h"
-#include "Anuncio.h"
-#include "Usuario.h"
 #include "ColaReproduccion.h"
 #include "GestorPublicidad.h"
+#include "Medidor.h"
 #include <QTextStream>
 #include <chrono>
 #include <thread>
+#include <cstdlib>
 
-// ... implementación reproducirAleatorio(...)
+static inline int rnd(int n){ return n? std::rand()%n : 0; }
 
-
-static inline int nextIdx(int n){
-    static unsigned seed=123457u;
-    seed = seed*1103515245u + 12345u;
-    return (int)(seed % (unsigned)n);
-}
-
-void reproducirAleatorio(CancionArr& ca, AnuncioArr& aa, Usuario& u, bool premium){
+void reproducirAleatorio(CancionArr& ca, AnuncioArr& aa, const Usuario& u, bool premium){
+    const int K = 5;
     QTextStream out(stdout);
     ColaReproduccion cola;
     GestorPublicidad gp; for(int i=0;i<aa.n; ++i) gp.add(&aa.items[i]);
-    for(int i=0;i<ca.n; ++i){
-        int j = nextIdx(ca.n);
-        encolarCancion(cola, &ca.items[j], premium, &gp, u);
+
+    Medidor M;
+    med_add_bytes(M, cola); med_add_bytes(M, gp); med_add_bytes(M, u); med_add_bytes(M, premium);
+
+    for(int k=0; k<K && ca.n>0; ++k){
+        int j = rnd(ca.n);              med_add_iters(M,1);
+        encolarCancion(cola, &ca.items[j], premium, &gp, u); med_add_iters(M,1);
+        reproducirActual(cola, premium);                      med_add_iters(M,1);
+        if(k < K-1){ std::this_thread::sleep_for(std::chrono::seconds(3)); med_add_iters(M,1); }
+        siguienteSecuencial(cola);                            med_add_iters(M,1);
     }
-    int k=0;
-    while(k<5 && cola.count>0){
-        reproducirActual(cola, premium);
-        std::this_thread::sleep_for(std::chrono::seconds(3));
-        siguienteSecuencial(cola);
-        ++k;
-    }
+    med_print("aleatorio", M);
 }

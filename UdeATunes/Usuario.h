@@ -16,13 +16,10 @@ private:
 public:
     void setId(qint64 v){ idUsuario=v; }
     qint64 id() const { return idUsuario; }
-
     void setNickname(const QString& n){ nickname=n; }
     QString getNickname() const { return nickname; }
-
     void setPlanPremium(bool p){ plan = p? PREMIUM : ESTANDAR; }
     bool esPremium() const { return plan==PREMIUM; }
-
     void setCiudad(const QString& c){ ciudad=c; }
     void setPais(const QString& p){ pais=p; }
     QString getCiudad() const { return ciudad; }

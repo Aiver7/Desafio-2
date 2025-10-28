@@ -1,6 +1,13 @@
 #include "CargasUsuarios.h"
 #include <QFile>
 #include <QTextStream>
+#include <QRegularExpression>
+
+static inline QString normNick(const QString& s){
+    QString t = s.trimmed();
+    t.replace(QRegularExpression("\\s+"), " ");
+    return t.toCaseFolded();
+}
 
 static inline QString at(const QStringList& v, int i){
     return (i>=0 && i<v.size())? v[i].trimmed() : QString();
@@ -22,18 +29,19 @@ bool cargarUsuarios(const char* ruta, UsuarioArr& ua){
         u.setPlanPremium(at(parts,1).toLower()=="premium");
         u.setCiudad(at(parts,2));
         u.setPais(at(parts,3));
-        // si quieres, usa setId para guardar un correlativo
         u.setId(ua.n+1);
-
         ua.n++;
     }
-    return true;
+    return ua.n>0;
 }
 
 bool loginPorNick(const UsuarioArr& ua, const char* nick, Usuario& u){
-    const QString qn = QString::fromUtf8(nick);
+    const QString qn = normNick(QString::fromUtf8(nick));
     for(int i=0;i<ua.n; ++i){
-        if(ua.items[i].getNickname()==qn){ u=ua.items[i]; return true; }
+        if(normNick(ua.items[i].getNickname()) == qn){
+            u = ua.items[i];
+            return true;
+        }
     }
     return false;
 }
