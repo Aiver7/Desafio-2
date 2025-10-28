@@ -9,10 +9,10 @@ SOURCES += \
         Aleatorio.cpp \
         CargasCancionAnuncio.cpp \
         CargasUsuarios.cpp \
+        ClasePrincipal.cpp \
         ColaReproduccion.cpp \
         Favoritos.cpp \
         IReproducible.cpp \
-        Medidor.cpp \
         main.cpp
 
 HEADERS += \
