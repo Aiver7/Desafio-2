@@ -22,7 +22,7 @@ void reproducirAleatorio(CancionArr& ca, AnuncioArr& aa, const Usuario& u, bool 
         encolarCancion(cola, &ca.items[j], premium, &gp, u); med_add_iters(M,1);
         reproducirActual(cola, premium);     med_add_iters(M,1);
         if(k < K-1){
-            out << "reproduciendo..." << Qt::flush;  med_add_iters(M,1);
+            out << "reproduciendo...\n" << Qt::flush;  med_add_iters(M,1);
             std::this_thread::sleep_for(std::chrono::seconds(3)); med_add_iters(M,1);
             out << "\n";
         }

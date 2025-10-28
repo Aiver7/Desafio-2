@@ -30,4 +30,5 @@ HEADERS += \
     GestorPublicidad.h \
     IReproducible.h \
     Medidor.h \
+    ReproductorControles.h \
     Usuario.h
